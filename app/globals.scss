@@ -195,6 +195,9 @@ ul {
   }
   &__inner {
     width: 50%;
+    @media screen and  (max-width: 769px) {
+      width: 90%;
+    }
   }
  
   &__btn {
