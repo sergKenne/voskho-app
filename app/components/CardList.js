@@ -1,30 +1,23 @@
 import React from 'react';
 import Card from './Card';
 import Pagination from './Pagination';
-import Modal from './Modal';
 import { fetchData } from '../utils/fetchData';
 
-const CardList = async ({ searchParamsItem, pageId }) => {
-
-    const urlItem = `https://taxivoshod.ru/testapi/?w=item&id=${searchParamsItem}`;
-    const urlData = `https://taxivoshod.ru/testapi/?w=list&page=${pageId}`;
-
-    const data = await fetchData(urlData);
-    const item = searchParamsItem ? await fetchData(urlItem) : null;
+const CardList = async ({ pageId }) => {
+    const data = await fetchData(`https://taxivoshod.ru/testapi/?w=list&page=${pageId}`);
 
     return (
         <>
             <div className="card-list">
                 {data.items.map((card) => (
                     <div className="card-list__item" key={card.id}>
-                        <Card id={card.id} name={card.name} currentPage={pageId} />
+                        <Card id={card.id} name={card.name} currentPage={data.page} />
                     </div>
                 ))}
             </div>
             <div className="card-list__pagination">
                 <Pagination pagesSize={data.pages} />
             </div>
-            {searchParamsItem && <Modal pageId={pageId} item={item} />}
         </>
     );
 };
