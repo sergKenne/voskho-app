@@ -334,5 +334,14 @@ ul {
   font-size: 24px;
 }
 
+.disabled {
+  cursor: not-allowed;
+  background: #ffffff;
+  &:hover {
+    background: #ffffff!important;
+    color: #252525!important;
+  }
+}
+
 
 

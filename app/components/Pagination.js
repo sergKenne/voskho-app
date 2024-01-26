@@ -1,12 +1,12 @@
 'use client';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 const Pagination = ({ pagesSize }) => {
     const { id } = useParams();
     const router = useRouter();
-    const [pageNumber, setPageNumber] = useState(null);
+    const [pageNumber, setPageNumber] = useState(id);
 
     const decrementPageNumber = () => {
         if (Number(pageNumber) > 1) {
@@ -22,14 +22,12 @@ const Pagination = ({ pagesSize }) => {
         }
     };
 
-    useEffect(() => {
-        setPageNumber(id);
-    }, []);
-
     return (
         <ul className="pagination">
             <li onClick={decrementPageNumber}>
-                <Link href={`/list/${pageNumber}`}>&lt;</Link>
+                <Link href={`/list/${pageNumber}`} className={pageNumber == 1 ? 'disabled' : ''}>
+                    &lt;
+                </Link>
             </li>
             {[...Object.keys([...Array(pagesSize)])]
                 .map((i) => Number(i) + 1)
@@ -41,7 +39,11 @@ const Pagination = ({ pagesSize }) => {
                     </li>
                 ))}
             <li onClick={incrementPageNumber}>
-                <Link href={`/list/${pageNumber}`}>&gt;</Link>
+                <Link
+                    href={`/list/${pageNumber}`}
+                    className={pageNumber == pagesSize ? 'disabled' : ''}>
+                    &gt;
+                </Link>
             </li>
         </ul>
     );

@@ -7,10 +7,9 @@ import { fetchData } from '../utils/fetchData';
 const CardList = async ({ searchParamsItem, pageId }) => {
 
     const urlItem = `https://taxivoshod.ru/testapi/?w=item&id=${searchParamsItem}`;
-    const urlPageQty = `https://taxivoshod.ru/testapi/?w=list`;
     const urlData = `https://taxivoshod.ru/testapi/?w=list&page=${pageId}`;
 
-    const [data, pagesSize] = await Promise.all([fetchData(urlData), fetchData(urlPageQty)]);
+    const data = await fetchData(urlData);
     const item = searchParamsItem ? await fetchData(urlItem) : null;
 
     return (
@@ -23,7 +22,7 @@ const CardList = async ({ searchParamsItem, pageId }) => {
                 ))}
             </div>
             <div className="card-list__pagination">
-                <Pagination pagesSize={pagesSize.pages} />
+                <Pagination pagesSize={data.pages} />
             </div>
             {searchParamsItem && <Modal pageId={pageId} item={item} />}
         </>
